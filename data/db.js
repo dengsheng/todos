@@ -11,7 +11,7 @@ function Todos(name,status){
 
 let toDoScheme = mongoose.Schema({
 			name:String,
-			status:String
+			status:{type:String,default:'todo'}
 	});
 let todoModel = mongoose.model('todoModel',toDoScheme);
 /*打开一次数据库*/
@@ -21,10 +21,15 @@ Todos.prototype.operate = function(fn){
 
 /*保存*/
 Todos.prototype.save = function(){
-
-	this.operate(function(){
-		let newtodo = new todoModel({name:this.name,status:this.status});
-		newtodo.save();
+	var Name = this.name;
+	var Status = this.status;
+	db.once('open',function(){
+		let newtodo = new todoModel({name:Name,status:Status});
+		newtodo.save(function(err){
+			if(err){
+				console.error(err);
+			}
+		});
 	});
 
 };
@@ -37,12 +42,16 @@ Todos.prototype.deleteAll = function(){
 
 };
 /*获取*/
-Todos.prototype.getAll = function(){
-	console.log(todoModel.find({},function(err,data){
+Todos.prototype.getAll = function(callback){
+	 todoModel.find({},function(err,docs){
 		if(err){
-			console.log(err)
+			console.error(err);
 		}
-	}));
+		docs.map(function(item){
+			return item.toObject();
+		});
+		callback(docs);
+	});
 };
 
 module.exports = Todos;
