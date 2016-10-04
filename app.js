@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path');
 const express = require('express');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const db = require('./data/db.js');
 const dbex = new db();
 const app = express();
@@ -11,6 +11,8 @@ app.set('view engine','jade');
 app.set('views',__dirname+'/public');
 
 app.use(express.static(path.join(__dirname,'./public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/',function(req,res,err){
 		
@@ -19,6 +21,22 @@ app.get('/',function(req,res,err){
 				data:post
 			});
 		});
+});
+
+app.get('/getdata',function(req,res,err){
+	dbex.getAll(function(data){
+		res.json(data);
+	});
+});
+
+app.post('/getdata',function(req,res){
+	var name = req.body.name;
+	var status = req.body.status;
+	var dbsave = new db(name,status);
+	dbsave.savetodo();
+	dbex.getAll(function(data){
+		res.json(data);
+	});
 });
 
 

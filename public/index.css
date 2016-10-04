@@ -5,21 +5,74 @@ div,footer{
   width: 500px;
   margin: 0 auto;
 }
-div input{
+div.todoList{
+  width:550px;
+  height:auto;
+  background-color:white;
+}
+div.todoList div.item{
+ width:100%;
+ height:63px;
+ border:1px solid #eee;
+line-height: 63px;
+font-size: 1.5rem;
+}
+div.todoList div.item input{
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 50px;
+}
+div.todoList div.item:hover span.finish{
+  display: inline-block;
+}
+div.todoList div.item span.finish{
+  color:#D13D3D;
+  font-weight: bolder;
+  float: right;
+  display: none;
+  cursor: pointer;
+}
+div input[type='text']{
   width:550px;
   height:65px;
   box-shadow:inset 0 -2px 10px rgba(0,0,0,.3);
   box-sizing:border-box;
   font-size:20px;
-  font-style: italic;
+  font-style:italic;
 }
 div h1{
   color: rgba(175, 47, 47, 0.15);
   font-size: 100px;
   font-weight: 100;
 }
+div.TodoFooter{
+  width: 550px;
+  background: white;
+  height: 50px;
+  line-height: 50px;
+}
+div.TodoFooter div{
+  width: 50%;
+}
+div.TodoFooter div.left{
+  float: left;
+}
+div.TodoFooter div.status{
+  float: right;
+}
+div.TodoFooter div.status button{
+  background: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+div.TodoFooter div.status button.selected{
+  border: 1px solid #EE8C8C;
+}
+div.TodoFooter div.status button:hover{
+  border: 1px solid #EE8C8C;
+}
 footer{
-  position:fixed;
-  left:40%;
+  position:relative;
   bottom:0;
 }

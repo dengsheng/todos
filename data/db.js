@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/todos');
-const db = mongoose.connection;
+var db = mongoose.connection;
 
 function Todos(name,status){
 	this.name = name;
@@ -20,18 +20,20 @@ Todos.prototype.operate = function(fn){
 };
 
 /*保存*/
-Todos.prototype.save = function(){
+Todos.prototype.savetodo = function(){
 	var Name = this.name;
 	var Status = this.status;
-	db.once('open',function(){
-		let newtodo = new todoModel({name:Name,status:Status});
-		newtodo.save(function(err){
+	console.log(Name);
+	console.log(Status);
+	//console.log(db);
+	let newtodo = new todoModel({name:Name,status:Status});
+	newtodo.save(function(err){
 			if(err){
 				console.error(err);
+			}else{
+				console.log("插入成功");
 			}
-		});
 	});
-
 };
 /*删除*/
 Todos.prototype.delete = function(){
@@ -50,7 +52,7 @@ Todos.prototype.getAll = function(callback){
 		docs.map(function(item){
 			return item.toObject();
 		});
-		callback(docs);
+		callback(docs);//返回获取到的数据
 	});
 };
 
