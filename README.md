@@ -1,3 +1,3 @@
 # todos
 
-基于nodejs+react的todos
+React练手项目todos
